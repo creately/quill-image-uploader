@@ -1,3 +1,4 @@
+import FileEmbed from "./blots/file-embed.js";
 import LoadingImage from "./blots/image.js";
 
 import "./quill.imageUploader.css";
@@ -21,6 +22,17 @@ class ImageUploader {
 
         this.quill.root.addEventListener("drop", this.handleDrop, false);
         this.quill.root.addEventListener("paste", this.handlePaste, false);
+        this.quill.root.addEventListener( FileEmbed.optionClickEventName , e => this.handleFileEmbeddOptions(e), false);
+    }
+
+    handleFileEmbeddOptions(evt) {
+        this.options.onOptionClick(evt).then( data => {
+            if ( data.data.optionId === 'remove' && data.success ) {
+                const optionDomNode = evt.optionDomNode;
+                const e = new Event( FileEmbed.removeEventName );
+                optionDomNode.dispatchEvent( e );
+            }
+        });
     }
 
     selectLocalImage() {
@@ -155,13 +167,16 @@ class ImageUploader {
         );
     }
 
-    insertToEditor(url) {
+    insertToEditor(data) {
         const range = this.range;
         // Delete the placeholder image
         this.quill.deleteText(range.index, 3, "user");
         // Insert the server saved image
-        this.quill.insertEmbed(range.index, "image", `${url}`, "user");
-
+        if ( data.type === 'file' ) {
+            this.quill.insertEmbed(range.index, FileEmbed.blotName, data, "user");
+        } else {
+            this.quill.insertEmbed(range.index, "image", `${data.link}`, "user");
+        }
         range.index++;
         this.quill.setSelection(range, "user");
     }
