@@ -32,9 +32,6 @@
   }
 }
 
-
-
-
 ul.more-opt-list {
   display: inline;
   z-index: 10000;
@@ -128,4 +125,46 @@ svg.more-opt-icon {
 svg.file-icon {
   width: 25px;
   height: 25px;
+}
+
+
+/* Image thumbnail blot */
+span.image-thumbnail {
+  display: inline-block;
+  position: relative;
+}
+
+span.image-thumbnail .image-thumbnail-div {
+  height: 60px;
+  background-size: contain;
+  background-position: center;
+  background-origin: content-box;
+  background-repeat: no-repeat;
+  margin-right: 5px;
+  width: 75px;
+  display: inline-block;
+  position: relative;
+  border: 1px solid #E3E3E3;
+  box-sizing: border-box;
+  border-radius: 5px;
+  padding: 4px;
+  margin-left: 5px;
+  top: 5px;
+}
+
+span.remove-thumbnail.file-embed-option {
+  position: absolute;
+  top: -5px;
+  right: 3px;
+  display: none;
+  cursor: pointer;
+}
+
+span.image-thumbnail-blot {
+  position: relative;
+  display: inline-flex;
+}
+
+span.image-thumbnail:hover span.remove-thumbnail.file-embed-option {
+  display:block;
 }
