@@ -1,5 +1,7 @@
 import FileEmbed from "./blots/file-embed.js";
+import ImageThumbnailBlot from "./blots/image-thumbnail.js";
 import LoadingImage from "./blots/image.js";
+import Quill from "quill";
 
 import "./quill.imageUploader.css";
 
@@ -186,6 +188,9 @@ class ImageUploader {
         this.quill.deleteText(range.index, 3, "user");
     }
 }
+
+Quill.register(FileEmbed, true);
+Quill.register({ "formats/imageThumbnail": ImageThumbnailBlot });
 
 window.ImageUploader = ImageUploader;
 export default ImageUploader;

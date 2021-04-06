@@ -1,10 +1,13 @@
 import Quill from "quill";
-
 const Embed = Quill.import("blots/embed");
 
 class FileEmbedBlot extends Embed {
 	static create(data) {
-		const node = super.create('fuck');
+		const node = super.create();
+        return this.createBlot( node, data );
+	}
+
+    static createBlot( node, data ) {
         node.setAttribute("data-filedata", JSON.stringify( data ));
         const iconLable = document.createElement("span");
         iconLable.className = 'file-blot';
@@ -39,7 +42,7 @@ class FileEmbedBlot extends Embed {
         node.appendChild(iconLable);
         node.appendChild(moreOptContainer);
 		return node;
-	}
+    }
 
 	static value(domNode) {
         return JSON.parse( domNode.getAttribute("data-filedata"));
@@ -86,7 +89,5 @@ FileEmbedBlot.className = "file-embed";
 
 FileEmbedBlot.removeEventName = "quill-file-embed-remove";
 FileEmbedBlot.optionClickEventName = "quill-file-embed-option";
-
-Quill.register(FileEmbedBlot, true);
 
 export default FileEmbedBlot;

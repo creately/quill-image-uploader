@@ -19,7 +19,4 @@ ImageThumbnailBlot.blotName = "imageThumbnail";
 ImageThumbnailBlot.tagName = "span";
 ImageThumbnailBlot.className = "image-thumbnail";
 
-
-Quill.register({ "formats/imageThumbnail": ImageThumbnailBlot });
-
 export default ImageThumbnailBlot;
