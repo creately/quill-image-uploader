@@ -11,12 +11,19 @@ class FileEmbedBlot extends Embed {
         node.setAttribute("data-filedata", JSON.stringify( data ));
         const iconLable = document.createElement("span");
         iconLable.className = 'file-blot';
-        iconLable.innerHTML = `
+        if ( data.icon.type === 'svg' ) {
+            iconLable.innerHTML = `
             <svg class="file-icon">
-                <svg id="nu-ic-styles" viewBox="0 0 32 32"><use xlink:href="./assets/icons/symbol-defs.svg#${data.icon}"></use></svg>
+                <svg id="nu-ic-styles" viewBox="0 0 32 32"><use xlink:href="${data.icon.value}"></use></svg>
             </svg>
             <span class="file-label">${data.label}</span>
         `;
+        } else {
+            iconLable.innerHTML = `
+            <i class="${data.icon.value} file-icon-font"></i>
+            <span class="file-label">${data.label}</span>
+        `;
+        }
 
         const moreOptContainer = document.createElement("span");
         moreOptContainer.className = 'more-opt-container';
