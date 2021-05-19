@@ -21,6 +21,7 @@ class ImageUploader {
 
         this.handleDrop = this.handleDrop.bind(this);
         this.handlePaste = this.handlePaste.bind(this);
+        this.handleInsertFile = this.handleInsertFile.bind(this);
 
         this.quill.root.addEventListener("drop", this.handleDrop, false);
         this.quill.root.addEventListener("paste", this.handlePaste, false);
@@ -97,6 +98,13 @@ class ImageUploader {
         }
     }
 
+    handleInsertFile( file, range ) {
+        setTimeout(() => {
+            this.range = range
+            this.readAndUploadFile(file);
+        }, 0);
+    }
+
     handlePaste(evt) {
         let clipboard = evt.clipboardData || window.clipboardData;
 
@@ -160,6 +168,9 @@ class ImageUploader {
     }
 
     insertBase64Image(url) {
+        if ( this.options && this.options.loadingImageUrl ) {
+            url = this.options.loadingImageUrl;
+        }
         const range = this.range;
         this.quill.insertEmbed(
             range.index,
@@ -177,7 +188,7 @@ class ImageUploader {
         if ( data.type === 'file' ) {
             this.quill.insertEmbed(range.index, FileEmbed.blotName, data, "user");
         } else {
-            this.quill.insertEmbed(range.index, "image", `${data.link}`, "user");
+            this.quill.insertEmbed(range.index, "image", `${data.imgSrc || data.link}`, "user");
         }
         range.index++;
         this.quill.setSelection(range, "user");

@@ -75,6 +75,10 @@ span.file-embed:hover .more-opt-container {
   display: inline-block;
 }
 
+.image-thumbnail-blot:hover .more-opt-container {
+  display: inline-block;
+}
+
 span.more-opt-container {
   display: none;
 }
