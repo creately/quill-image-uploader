@@ -183,7 +183,7 @@ class ImageUploader {
     insertToEditor(data) {
         const range = this.range;
         // Delete the placeholder image
-        this.quill.deleteText(range.index, 3, "user");
+        this.quill.deleteText(range.index, 2, "user");
         // Insert the server saved image
         if ( data.type === 'file' ) {
             this.quill.insertEmbed(range.index, FileEmbed.blotName, data, "user");
@@ -196,7 +196,7 @@ class ImageUploader {
 
     removeBase64Image() {
         const range = this.range;
-        this.quill.deleteText(range.index, 3, "user");
+        this.quill.deleteText(range.index, 2, "user");
     }
 }
 
