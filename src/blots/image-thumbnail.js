@@ -7,17 +7,12 @@ class ImageThumbnailBlot extends FileEmbedBlot {
         node.setAttribute("data-filedata", JSON.stringify( data ));
         const container = document.createElement("span");
         container.className = 'image-thumbnail-blot';
-        container.innerHTML = `
-            <div class="image-thumbnail-div" style="background-image: url(${data.imgSrc || data.link})"></div>`;
+        container.innerHTML = `<div class="image-thumbnail-div" style="background-image: url(${data.imgSrc || data.link})"></div>`;
         node.appendChild(container);
 
         const moreOptContainer = document.createElement("span");
         moreOptContainer.className = 'more-opt-container';
-        moreOptContainer.innerHTML = `
-            <svg class="more-opt-icon">
-                <svg id="nu-ic-styles" viewBox="0 0 32 32"><use xlink:href="./assets/icons/symbol-defs.svg#nu-ic-more"></use></svg>
-            </svg>
-        `;
+        moreOptContainer.innerHTML = `<svg class="more-opt-icon"><svg id="nu-ic-styles" viewBox="0 0 32 32"><use xlink:href="./assets/icons/symbol-defs.svg#nu-ic-more"></use></svg></svg>`;
         const options = document.createElement("span");
         options.className = 'more-opt';
         options.innerHTML = `<ul class="more-opt-list"></ul>`;

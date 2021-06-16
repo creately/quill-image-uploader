@@ -12,26 +12,14 @@ class FileEmbedBlot extends Embed {
         const iconLable = document.createElement("span");
         iconLable.className = 'file-blot';
         if ( data.icon.type === 'svg' ) {
-            iconLable.innerHTML = `
-            <svg class="file-icon">
-                <svg id="nu-ic-styles" viewBox="0 0 32 32"><use xlink:href="${data.icon.value}"></use></svg>
-            </svg>
-            <span class="file-label">${data.label}</span>
-        `;
+            iconLable.innerHTML = `<svg class="file-icon"><svg id="nu-ic-styles" viewBox="0 0 32 32"><use xlink:href="${data.icon.value}"></use></svg></svg><span class="file-label">${data.label}</span>`;
         } else {
-            iconLable.innerHTML = `
-            <i class="${data.icon.value} file-icon-font"></i>
-            <span class="file-label">${data.label}</span>
-        `;
+            iconLable.innerHTML = `<i class="${data.icon.value} file-icon-font"></i><span class="file-label">${data.label}</span>`;
         }
 
         const moreOptContainer = document.createElement("span");
         moreOptContainer.className = 'more-opt-container';
-        moreOptContainer.innerHTML = `
-            <svg class="more-opt-icon">
-                <svg id="nu-ic-styles" viewBox="0 0 32 32"><use xlink:href="./assets/icons/symbol-defs.svg#nu-ic-more"></use></svg>
-            </svg>
-        `;
+        moreOptContainer.innerHTML = `<svg class="more-opt-icon"><svg id="nu-ic-styles" viewBox="0 0 32 32"><use xlink:href="./assets/icons/symbol-defs.svg#nu-ic-more"></use></svg></svg>`;
         const options = document.createElement("span");
         options.className = 'more-opt';
         options.innerHTML = `<ul class="more-opt-list"></ul>`;
