@@ -1,8 +1,7 @@
 import Quill from "quill";
+const Embed = Quill.import("blots/embed");
 
-const InlineBlot = Quill.import("blots/block");
-
-class LoadingImage extends InlineBlot {
+class LoadingImage extends Embed {
     static create(src) {
         const node = super.create(src);
         if (src === true) return node;

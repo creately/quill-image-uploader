@@ -2,6 +2,7 @@ import FileEmbed from "./blots/file-embed.js";
 import ImageThumbnailBlot from "./blots/image-thumbnail.js";
 import LoadingImage from "./blots/image.js";
 import Quill from "quill";
+import Delta from "quill-delta";
 
 import "./quill.imageUploader.css";
 
@@ -131,19 +132,23 @@ class ImageUploader {
     }
 
     readAndUploadFile(file) {
-        let isUploadReject = false;
-
         const fileReader = new FileReader();
+        let base64ImageAdded = false;
+        let uploaded = false;
+
 
         fileReader.addEventListener(
             "load",
             () => {
-                if (!isUploadReject) {
-                    let base64ImageSrc = fileReader.result;
-                    this.insertBase64Image(base64ImageSrc);
-                }
+                // This timeout added to fix an issues related to angular zone.
+                setTimeout(() => {
+                    if ( !uploaded ) {
+                        let base64ImageSrc = fileReader.result;
+                        this.insertBase64Image(base64ImageSrc);
+                        base64ImageAdded = true;
+                    }
+                }, 100 );
             },
-            false
         );
 
         if (file) {
@@ -152,11 +157,16 @@ class ImageUploader {
 
         this.options.upload(file).then(
             (imageUrl) => {
+                if ( base64ImageAdded ) {
+                    this.removeBase64Image();
+                }
+                uploaded = true;
                 this.insertToEditor(imageUrl);
             },
             (error) => {
-                isUploadReject = true;
-                this.removeBase64Image();
+                if ( base64ImageAdded ) {
+                    this.removeBase64Image();
+                }
                 console.warn(error);
             }
         );
@@ -182,8 +192,6 @@ class ImageUploader {
 
     insertToEditor(data) {
         const range = this.range;
-        // Delete the placeholder image
-        this.quill.deleteText(range.index, 2, "user");
         // Insert the server saved image
         if ( data.type === 'file' ) {
             this.quill.insertEmbed(range.index, FileEmbed.blotName, data, "user");
@@ -196,7 +204,10 @@ class ImageUploader {
 
     removeBase64Image() {
         const range = this.range;
-        this.quill.deleteText(range.index, 2, "user");
+        this.quill.updateContents(new Delta()
+            .retain(range.index)                  
+            .delete( 1 )
+        )
     }
 }
 
